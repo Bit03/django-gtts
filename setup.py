@@ -34,7 +34,7 @@ setup(
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     platforms=['any'],
-    install_requires=['gTTS-token>=1.1.1', 'requests>=2.18.1'],
+    install_requires=['PySocks>=1.6.8', 'requests>=2.18.1'],
     classifiers=CLASSIFIERS,
     zip_safe=False,
 )
