@@ -1,9 +1,15 @@
 import re
+import warnings
 
 from six.moves import urllib
 from gtts_token.gtts_token import Token
+
+from io import BytesIO
+
 import requests
 import logging
+
+from urllib3.exceptions import InsecureRequestWarning
 
 logger = logging.getLogger('django-gtts')
 
@@ -115,8 +121,11 @@ class gTTS:
 
     def save(self, savefile):
         """ Do the Web request and save to `savefile` """
-        with open(savefile, 'wb') as f:
-            self.write_to_fp(f)
+        if type(savefile) == BytesIO:
+            self.write_to_fp(savefile)
+        else:
+            with open(savefile, 'wb') as f:
+                self.write_to_fp(f)
 
     def write_to_fp(self, fp):
         for idx, part in enumerate(self.text_parts):
@@ -133,25 +142,27 @@ class gTTS:
                 "Referer": "https://translate.google.com/",
                 "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36"
             }
-            try:
-                r = requests.get(
-                    url=self.GOOGLE_TTS_URL,
-                    params=payload,
-                    headers=headers,
-                    proxies=self.proxies,
-                    verify=False,
-                )
-                if self.debug:
-                    logger.debug("Headers: {}".format(r.request.headers))
-                    logger.debug("Request url: {}".format(r.request.url))
-                    logger.debug("Response: {}, Redirects: {}".format(r.status_code, r.history))
-                r.raise_for_status()
-                for chunk in r.iter_content(chunk_size=1024):
-                    fp.write(chunk)
+            with warnings.catch_warnings():
+                warnings.filterwarnings("ignore", category=InsecureRequestWarning)
+                try:
+                    r = requests.get(
+                        url=self.GOOGLE_TTS_URL,
+                        params=payload,
+                        headers=headers,
+                        proxies=self.proxies,
+                        verify=False,
+                    )
+                    if self.debug:
+                        logger.debug("Headers: {}".format(r.request.headers))
+                        logger.debug("Request url: {}".format(r.request.url))
+                        logger.debug("Response: {}, Redirects: {}".format(r.status_code, r.history))
+                    r.raise_for_status()
+                    for chunk in r.iter_content(chunk_size=1024):
+                        fp.write(chunk)
 
-            except Exception as e:
-                logger.debug(e.message)
-                raise
+                except Exception as e:
+                    logger.debug(e.message)
+                    raise
 
     def _len(self, text):
         """ Get char len of `text`, after decoding if Python 2 """
