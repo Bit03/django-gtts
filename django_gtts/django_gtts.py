@@ -25,4 +25,3 @@ class TTSpeech(object):
 
 if __name__ == "__main__":
     tts = TTSpeech(text='您好')
-    # output =

@@ -13,6 +13,5 @@ def text_2_speech(request):
     """
     tts = TTSpeech(text=text, proxies=proxies)
     data = tts.text_to_speech(lang='zh')
-    # print (data)
     d = data.getvalue()
     return HttpResponse(content=d, content_type='audio/mpeg')
