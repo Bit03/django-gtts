@@ -1,8 +1,5 @@
-from tts import gTTS
 from io import BytesIO
-from hashlib import md5
-# from django.core.files.storage import get_storage_class
-# from django.conf import settings
+from .tts import gTTS
 
 
 class TTSpeech(object):

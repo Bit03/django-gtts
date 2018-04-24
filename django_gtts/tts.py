@@ -1,14 +1,11 @@
 import re
 import warnings
-
 from six.moves import urllib
-from gtts_token import Token
 from io import BytesIO
 import requests
 import logging
-
-# from urllib3.exceptions import InsecureRequestWarning
 from urllib3.exceptions import InsecureRequestWarning
+from .gtts_token import Token
 
 logger = logging.getLogger('django-gtts')
 

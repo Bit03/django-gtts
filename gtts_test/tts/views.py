@@ -4,8 +4,8 @@ from django.http import HttpResponse
 
 def text_2_speech(request):
     proxies = dict(
-        http='http:127.0.0.1:1087',
-        https='http:127.0.0.1:1087',
+        http='socks5://127.0.0.1:1086',
+        https='socks5://127.0.0.1:1086',
     )
 
     text = """
