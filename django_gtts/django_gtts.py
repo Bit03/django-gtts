@@ -1,4 +1,4 @@
-from .tts import gTTS
+from tts import gTTS
 from io import BytesIO
 from hashlib import md5
 # from django.core.files.storage import get_storage_class
@@ -24,4 +24,9 @@ class TTSpeech(object):
 
 
 if __name__ == "__main__":
-    tts = TTSpeech(text='您好')
+    proxies = dict(
+        http='socks5://127.0.0.1:1086',
+        https='socks5://127.0.0.1:1086',
+    )
+    tts = TTSpeech(text='您好', proxies=proxies)
+    tts.text_to_speech(lang='zh')

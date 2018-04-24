@@ -2,13 +2,12 @@ import re
 import warnings
 
 from six.moves import urllib
-from gtts_token.gtts_token import Token
-
+from gtts_token import Token
 from io import BytesIO
-
 import requests
 import logging
 
+# from urllib3.exceptions import InsecureRequestWarning
 from urllib3.exceptions import InsecureRequestWarning
 
 logger = logging.getLogger('django-gtts')
@@ -81,7 +80,7 @@ class gTTS:
         'cy': 'Welsh'
     }
 
-    def __init__(self, text, lang='en', slow=False, debug=False, proxies=dict()):
+    def __init__(self, text, lang='en', slow=False, debug=False, proxies=None):
         self.debug = debug
 
         assert lang.lower() in self.LANGUAGES, 'Language not supported: %s' % lang
@@ -108,7 +107,6 @@ class gTTS:
             text_parts = self._tokenize(text, self.MAX_CHARS)
 
             # Clean
-
         def strip(x):
             return x.replace('\n', '').strip()
 
@@ -117,7 +115,7 @@ class gTTS:
         self.text_parts = text_parts
 
         # Google Translate token
-        self.token = Token()
+        self.token = Token(proxies=self.proxies)
 
     def save(self, savefile):
         """ Do the Web request and save to `savefile` """
@@ -126,6 +124,7 @@ class gTTS:
         else:
             with open(savefile, 'wb') as f:
                 self.write_to_fp(f)
+            f.close()
 
     def write_to_fp(self, fp):
         for idx, part in enumerate(self.text_parts):
@@ -198,5 +197,9 @@ class gTTS:
 
 
 if __name__ == "__main__":
-    tts = gTTS('hello', )
+    proxies = dict(
+        http='socks5://127.0.0.1:1086',
+        https='socks5://127.0.0.1:1086',
+    )
+    tts = gTTS('hello', proxies=proxies)
     tts.save('hello.mp3')
