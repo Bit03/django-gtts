@@ -1,21 +1,23 @@
 language: python
+python:
+  - "3.6.5"
 sudo: false
+dist: xenial
 
 branches:
   only:
     - master
 
-matrix:
-  include:
-    - python: "3.6.5"
-      env: TOX_ENV=py36-django111
-#    - python: "2.7"
-#      env: TOX_ENV=py27-django18
-    - python: "2.7.13"
-      env: TOX_ENV=py27-django111
+#matrix:
+#  include:
+#    - python: "3.6.5"
+#      env: TOX_ENV=py36-django111
+#
+#    - python: "2.7.13"
+#      env: TOX_ENV=py27-django111
 
-install:
-  - pip install tox
-
+#install:
+#  - pip install tox
+#
 script:
-  - tox -e $TOX_ENV
+  - python tests.py
