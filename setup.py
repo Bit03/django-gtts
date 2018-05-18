@@ -1,6 +1,6 @@
 from setuptools import setup
 
-DESCRIPTION = "A Django Plugin TEXT to SPEECH by Google"
+DESCRIPTION = "A Django Plugin TEXT to SPEECH by Google TTS"
 
 LONG_DESCRIPTION = None
 
@@ -34,7 +34,7 @@ setup(
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     platforms=['any'],
-    install_requires=['PySocks>=1.6.8', 'requests>=2.18.1'],
+    install_requires=['PySocks>=1.6.8', 'requests>=2.18'],
     classifiers=CLASSIFIERS,
     zip_safe=False,
 )
