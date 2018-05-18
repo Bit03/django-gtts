@@ -16,8 +16,8 @@ branches:
 #    - python: "2.7.13"
 #      env: TOX_ENV=py27-django111
 
-#install:
-#  - pip install tox
-#
+install:
+  - pip install requests PySocks
+
 script:
   - python tests.py
