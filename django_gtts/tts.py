@@ -136,7 +136,8 @@ class gTTS:
                        'tk': self.token.calculate_token(part)}
             headers = {
                 "Referer": "https://translate.google.com/",
-                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36"
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) "
+                              "Chrome/65.0.3325.181 Safari/537.36 "
             }
             with warnings.catch_warnings():
                 warnings.filterwarnings("ignore", category=InsecureRequestWarning)
@@ -195,8 +196,8 @@ class gTTS:
 
 if __name__ == "__main__":
     proxies = dict(
-        http='socks5://127.0.0.1:1086',
-        https='socks5://127.0.0.1:1086',
+        http='socks5h://127.0.0.1:1086',
+        https='socks5h://127.0.0.1:1086',
     )
     tts = gTTS('hello', proxies=proxies)
     tts.save('hello.mp3')

@@ -4,7 +4,7 @@ DESCRIPTION = "A Django Plugin TEXT to SPEECH by Google TTS"
 
 LONG_DESCRIPTION = None
 
-version = '0.1'
+version = '0.2'
 
 try:
     LONG_DESCRIPTION = open('README.md').read()

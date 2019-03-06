@@ -54,7 +54,7 @@ class Token:
         if self.token_key is not None:
             return self.token_key
 
-        response = requests.get("https://translate.google.com/")
+        response = requests.get("https://translate.google.com/", proxies=self.proxies)
         tkk_expr = re.search("(tkk:.*?),", response.text)
         if not tkk_expr:
             raise ValueError(
